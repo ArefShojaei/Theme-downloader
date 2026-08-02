@@ -2,57 +2,15 @@
 
 require_once __DIR__ . "/vendor/autoload.php";
 
-use App\Utils\Config\Config;
-use PhpX\{
-    Components\Console\App,
-    Utils\Console\Console
-};
-use function App\{
-    downloadTemplateFonts,
-    downloadTemplatePages,
-    serveTemplate
-};
+$app = new PhpX\Components\Console\App();
 
-
-
-$app = new App;
-
-$app->command("template --config", function() {
-    echo Console::info(label:"MULTIPLE TASK", message:"Starting template tasks...") . PHP_EOL;
-
-    $file = __DIR__ . "/template.config.json";
-    
-    $config = Config::create($file)->get();
-
-    foreach ($config as $domain => $meta) {
-        !array_key_exists("pages", $meta) && die(Console::error("Pages key doesn't exist!"));
-
-        $fonts = $meta["fonts"];
-        $pages = $meta["pages"];
-
-        downloadTemplateFonts($fonts);
-        $client = downloadTemplatePages($pages);
-    }
-
-    $client->saveArchive();
-
-    return Console::success(label:"MULTIPLE TASK", message:"Done the template tasks successfully.");
-});
-
-$app->command("template {url}", function(string $url) {
-    if (!str_contains("http", $url) && !str_contains("https", $url)) {
-        echo Console::error("Invalid page URL!");
-
-        exit;
-    }
-
-    echo Console::info(label:"SIGNLE TASK", message:"Starting \"{$url}\" template task...") . PHP_EOL;
-    
-    $client = serveTemplate($url);
-    
-    $client->saveArchive();
-
-    return Console::success(label:"SIGNLE TASK", message:"Done the template task successfully.");
-});
+$app->command(
+    "template --config",
+    new App\Console\Commands\TemplateConfigCommand(),
+);
+$app->command(
+    "template {url}",
+    new App\Console\Commands\TemplateDownloadCommand(),
+);
 
 $app->launch();
