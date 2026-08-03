@@ -17,6 +17,7 @@ final class ImageCollector extends BaseAssetCollector
                 $this->links[] = $src;
             }
         });
+
         return $this;
     }
 }
