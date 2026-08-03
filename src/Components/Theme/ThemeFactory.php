@@ -2,8 +2,9 @@
 
 namespace App\Components\Theme;
 
-use App\Components\Theme\Interfaces\ThemeFactory as IThemeFactory;
 use Spider\Page;
+
+use App\Components\Theme\Interfaces\ThemeFactory as IThemeFactory;
 
 final class ThemeFactory implements IThemeFactory
 {

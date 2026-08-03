@@ -5,6 +5,7 @@ namespace App\Components\Theme;
 use Spider\Page;
 
 use App\Components\Storage\{Storage, StorageFactory};
+use App\Components\Theme\Interfaces\Theme as ITheme;
 use App\Components\Asset\{
     AssetAggregator,
     AssetDownloader,
@@ -12,7 +13,6 @@ use App\Components\Asset\{
     AssetCollectorFactory,
     AssetRewriteCoordinator,
 };
-use App\Components\Theme\Interfaces\Theme as ITheme;
 
 final class Theme implements ITheme
 {
