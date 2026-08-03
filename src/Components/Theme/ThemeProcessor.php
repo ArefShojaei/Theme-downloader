@@ -8,6 +8,7 @@ use Kit\Net\Request;
 use Kit\Support\{Str, Arr};
 use PhpX\Utils\Console\Console;
 
+use App\Components\Path\Path;
 use App\Components\Theme\Interfaces\Processor as InterfacesProcessor;
 
 final class ThemeProcessor implements InterfacesProcessor
@@ -27,6 +28,8 @@ final class ThemeProcessor implements InterfacesProcessor
 
     private function processPages(array $pages, string $name): void
     {
+        if (empty($pages)) return;
+
         foreach ($pages as $filename => $url) {
             if (!Str::isURL($url)) {
                 echo Console::error(
@@ -69,7 +72,7 @@ final class ThemeProcessor implements InterfacesProcessor
 
             $theme = $factory->create(
                 name: $name,
-                path: dirname(__DIR__, 3) . "/tmp",
+                path: Path::get("dist"),
                 file: "{$filename}.html",
             );
 
@@ -81,16 +84,15 @@ final class ThemeProcessor implements InterfacesProcessor
 
     private function processFonts(array $fonts, string $name): void
     {
-        foreach ($fonts as $font) {
-            $file = pathinfo($font, PATHINFO_BASENAME);
-            $path =
-                dirname(__DIR__, 3) .
-                "/tmp/" .
-                $name .
-                "/assets/fonts/" .
-                $file;
+        if (empty($fonts)) return;
 
+        foreach ($fonts as $font) {
             $content = Request::get($font);
+
+            $path =
+                Path::get("dist") .
+                Path::create("/{$name}/assets/fonts/") .
+                Path::file($font);
 
             File::save($path, $content);
         }

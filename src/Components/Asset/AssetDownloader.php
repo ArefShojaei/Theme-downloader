@@ -3,10 +3,12 @@
 namespace App\Components\Asset;
 
 use Kit\Net\Request;
+use Kit\Support\Arr;
 use PhpX\Utils\Console\Console;
 
-use App\Components\Asset\Interfaces\Downloadable;
+use App\Components\Path\Path;
 use App\Components\Storage\Storage;
+use App\Components\Asset\Interfaces\Downloadable;
 
 final class AssetDownloader implements Downloadable
 {
@@ -15,13 +17,26 @@ final class AssetDownloader implements Downloadable
         private Storage $storage,
     ) {}
 
+    private function getAssetFile(string $path): string
+    {
+        $file = Path::file($path);
+
+        $parts = explode("?", $file);
+
+        return current($parts);
+    }
+
     public function download(): void
     {
         $assets = $this->aggregator->aggregate();
 
-        $this->downloadStyles($assets["styles"]);
-        $this->downloadScripts($assets["scripts"]);
-        $this->downloadImages($assets["images"]);
+        $styles = Arr::get($assets, "styles");
+        $scripts = Arr::get($assets, "scripts");
+        $images = Arr::get($assets, "images");
+
+        $this->downloadStyles($styles);
+        $this->downloadScripts($scripts);
+        $this->downloadImages($images);
     }
 
     private function downloadStyles(array $styles): void
@@ -36,11 +51,9 @@ final class AssetDownloader implements Downloadable
 
             $content = (string) Request::get($style);
 
-            $path = pathinfo($style, PATHINFO_BASENAME);
-
-            $pathParts = explode("?", $path);
-
-            $filePath = "/assets/css/" . current($pathParts);
+            $filePath = Path::create(
+                "/assets/css/" . $this->getAssetFile($style),
+            );
 
             $this->storage->save($filePath, $content);
 
@@ -57,22 +70,20 @@ final class AssetDownloader implements Downloadable
 
         foreach ($scripts as $script) {
             echo Console::warn(
-                label: "JAVASCRIPT",
+                label: "JS",
                 message: "Downloading \"{$script}\"...",
             ) . PHP_EOL;
 
             $content = (string) Request::get($script);
 
-            $path = pathinfo($script, PATHINFO_BASENAME);
-
-            $pathParts = explode("?", $path);
-
-            $filePath = "/assets/js/" . current($pathParts);
+            $filePath = Path::create(
+                "/assets/js/" . $this->getAssetFile($script),
+            );
 
             $this->storage->save($filePath, $content);
 
             echo Console::success(
-                label: "JAVASCRIPT",
+                label: "JS",
                 message: "Downloaded \"{$script}\".",
             ) . PHP_EOL;
         }
@@ -84,22 +95,20 @@ final class AssetDownloader implements Downloadable
 
         foreach ($images as $image) {
             echo Console::warn(
-                label: "IMAGE",
+                label: "IMG",
                 message: "Downloading \"{$image}\"...",
             ) . PHP_EOL;
 
             $content = (string) Request::get($image);
 
-            $path = pathinfo($image, PATHINFO_BASENAME);
-
-            $pathParts = explode("?", $path);
-
-            $filePath = "/assets/images/" . current($pathParts);
+            $filePath = Path::create(
+                "/assets/images/" . $this->getAssetFile($image),
+            );
 
             $this->storage->save($filePath, $content);
 
             echo Console::success(
-                label: "IMAGE",
+                label: "IMG",
                 message: "Downloaded \"{$image}\".",
             ) . PHP_EOL;
         }

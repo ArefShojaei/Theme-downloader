@@ -4,6 +4,7 @@ namespace App\Components\Storage;
 
 use Kit\Fs\{Directory, File};
 
+use App\Components\Path\Path;
 use App\Components\Storage\Interfaces\Storage as IStorage;
 
 final class Storage implements IStorage
@@ -21,7 +22,7 @@ final class Storage implements IStorage
 
     public function save(string $file, string $content): bool
     {
-        $path = $this->root . "/" . $file;
+        $path = Path::create($this->root . "/" . $file);
 
         if (!File::has($path)) return File::save($path, $content);
 

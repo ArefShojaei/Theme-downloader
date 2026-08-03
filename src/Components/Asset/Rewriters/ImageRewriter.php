@@ -2,6 +2,9 @@
 
 namespace App\Components\Asset\Rewriters;
 
+use Kit\Support\Arr;
+
+use App\Components\Path\Path;
 use App\Components\Asset\BaseAssetRewriter;
 
 final class ImageRewriter extends BaseAssetRewriter
@@ -9,11 +12,12 @@ final class ImageRewriter extends BaseAssetRewriter
     public function rewrite(): void
     {
         $this->page->findAll("img[src]")->each(function ($_, $element) {
-            $src = $element->attr("src");
+            $attributes = $element->attr();
+
+            $src = Arr::get($attributes, "src");;
 
             if (!empty($src) || isset($src)) {
-                $root = "/assets/images/";
-                $path = $root . pathinfo($src, PATHINFO_BASENAME);
+                $path = Path::create("/assets/images/" . Path::file($src));
 
                 $element->attr("src", $path);
             }

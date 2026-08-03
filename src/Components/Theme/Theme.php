@@ -4,6 +4,7 @@ namespace App\Components\Theme;
 
 use Spider\Page;
 
+use App\Components\Path\Path;
 use App\Components\Storage\{Storage, StorageFactory};
 use App\Components\Theme\Interfaces\Theme as ITheme;
 use App\Components\Asset\{
@@ -42,9 +43,11 @@ final class Theme implements ITheme
     {
         $this->rewrite();
 
-        $this->page->export(
+        $path = Path::create(
             $this->path . "/" . $this->name . "/" . $this->file,
         );
+
+        $this->page->export($path);
     }
 
     private function collect(): void

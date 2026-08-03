@@ -2,7 +2,10 @@
 
 namespace App\Components\Asset\Rewriters;
 
+use Kit\Support\Arr;
+
 use App\Components\Asset\BaseAssetRewriter;
+use App\Components\Path\Path;
 
 final class StyleRewriter extends BaseAssetRewriter
 {
@@ -11,12 +14,11 @@ final class StyleRewriter extends BaseAssetRewriter
         $this->page->findAll("link[href]")->each(function ($_, $element) {
             $attributes = $element->attr();
 
-            $rel = $attributes["rel"];
-            $link = $attributes["href"];
+            $rel = Arr::get($attributes, "rel");
+            $link = Arr::get($attributes, "href");
 
             if ($rel === "stylesheet" && !str_contains($link, "#")) {
-                $root = "/assets/css/";
-                $path = $root . pathinfo($link, PATHINFO_BASENAME);
+                $path = Path::create("/assets/css/" . Path::file($link));
 
                 $element->attr("href", $path);
             }
