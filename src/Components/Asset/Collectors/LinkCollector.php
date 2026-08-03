@@ -2,6 +2,8 @@
 
 namespace App\Components\Asset\Collectors;
 
+use Kit\Support\Arr;
+
 use App\Components\Asset\BaseAssetCollector;
 
 final class LinkCollector extends BaseAssetCollector
@@ -11,7 +13,7 @@ final class LinkCollector extends BaseAssetCollector
         $this->page->findAll("a[href]")->each(function ($_, $element) {
             $attributes = $element->attr();
 
-            $link = $attributes["href"];
+            $link = Arr::get($attributes, "href");
 
             if (!empty($link) && !str_contains($link, "#")) {
                 $this->links[] = $link;
