@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use PhpX\Components\Console\Command;
 
-final class TemplateConfigCommand extends Command
+final class ThemeDownloaderFromConfigCommand extends Command
 {
     public function exec(array $params): string
     {

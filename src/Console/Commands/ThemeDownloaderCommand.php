@@ -3,27 +3,20 @@
 namespace App\Console\Commands;
 
 use Spider\Spider;
-use Kit\Support\Str;
 use Kit\Net\Request;
+use Kit\Support\{Str, Arr};
 use PhpX\Utils\Console\Console;
 use PhpX\Components\Console\Command;
 
-use App\Components\Storage\StorageFactory;
-use App\Components\Asset\{
-    AssetAggregator,
-    AssetCollectorFactory,
-    AssetDownloader,
-};
+use App\Components\Theme\ThemeBuilder;
 
-final class TemplateDownloadCommand extends Command
+final class ThemeDownloaderCommand extends Command
 {
     public function exec(array $params): string
     {
-        $url = $params["url"];
+        $url = Arr::get($params, "url");
 
-        if (!Str::isURL($url)) {
-            return Console::error("Invalid Page url!");
-        }
+        if (!Str::isURL($url)) return Console::error(label: "VALIDATION", message: "Invalid URL!");
 
         echo Console::info(
             label: "START",
@@ -32,33 +25,36 @@ final class TemplateDownloadCommand extends Command
 
         $html = (string) Request::get($url);
 
-        if (Str::isEmpty($html) || Str::isJSON($html)) {
-            return Console::error("Response content is not valid HTML output!");
-        }
+        if (Str::isEmpty($html) || Str::isJSON($html))
+            Console::error(label: "VALIDATION", message: "Response content is not valid HTML output!");
 
+        /**
+         * Load DOM Tree
+         */
         $spider = new Spider();
 
         $page = $spider->loadHTML($html);
 
-        $assetFactory = new AssetCollectorFactory($page);
+        /**
+         * Create Theme
+         * 1- Setup Builder
+         * 2- Configure
+         * 3- Collect Styles, Scripts, Images & Links addresses
+         * 4- Rewrite Styles, Scripts, Images & Links addresses
+         * 5- Download
+         */
+        $theme = (new ThemeBuilder)
+            ->setName(pathinfo($url, PATHINFO_FILENAME))
+            ->setPage($page)
+            ->build();
 
-        $aggregator = new AssetAggregator(
-            style: $assetFactory->createStyleCollector(),
-            script: $assetFactory->createScriptCollector(),
-            image: $assetFactory->createImageCollector(),
-            link: $assetFactory->createLinkCollector(),
-        );
+        $theme->configure(dirname(__DIR__, 3) . "/tmp");
 
-        $storage = StorageFactory::create(
-            dirname(__DIR__, 3) . "/tmp/",
-            pathinfo($url, PATHINFO_FILENAME),
-        );
+        $theme->collect();
 
-        $storage->save("index.html", $html);
+        $theme->rewrite();
 
-        $downloader = new AssetDownloader($aggregator, $storage);
-
-        $downloader->download();
+        $theme->download();
 
         return Console::success(
             label: "END",

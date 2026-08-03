@@ -5,12 +5,9 @@ require_once __DIR__ . "/vendor/autoload.php";
 $app = new PhpX\Components\Console\App();
 
 $app->command(
-    "template --config",
-    new App\Console\Commands\TemplateConfigCommand(),
+    "theme --config",
+    new App\Console\Commands\ThemeDownloaderFromConfigCommand(),
 );
-$app->command(
-    "template {url}",
-    new App\Console\Commands\TemplateDownloadCommand(),
-);
+$app->command("theme {url}", new App\Console\Commands\ThemeDownloaderCommand());
 
 $app->launch();
