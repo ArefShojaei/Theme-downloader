@@ -1,6 +1,6 @@
 {
-    "name": "arefshojaei/template-downloader",
-    "description": "HTML template downloader",
+    "name": "arefshojaei/theme-downloader",
+    "description": "HTML Theme Downloader",
     "license": "MIT",
     "type": "project",
     "minimum-stability": "stable",
@@ -9,6 +9,7 @@
         "ssr",
         "html",
         "theme",
+        "asset",
         "parser",
         "public",
         "template",
@@ -31,7 +32,7 @@
         "php": "^8.0",
         "arefshojaei/php-x": "^1.6",
         "arefshojaei/spider": "^2.3",
-        "guzzlehttp/guzzle": "^7.9",
-        "arefshojaei/kitdash": "^2.0"
+        "arefshojaei/kitdash": "^2.0",
+        "guzzlehttp/guzzle": "^7.9"
     }
 }
