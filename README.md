@@ -1,5 +1,4 @@
 <div align="center">
-    <img src="docs/thumbnail.png" alt="Template Downloader" />
 
 <h1 align="center">📥 Themme Downloader - SSR Rendering Model</h1>
 
