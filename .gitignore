@@ -1,6 +1,6 @@
 /vendor/
+/tmp/
+/node_modules/
 .phpunit.cache
 composer.lock
-/dist/
-/node_modules/
 package-lock.json
