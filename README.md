@@ -1,10 +1,10 @@
 <div align="center">
     <img src="docs/thumbnail.png" alt="Template Downloader" />
 
-<h1 align="center">📥 Template Downloader - SSR Rendering Model</h1>
+<h1 align="center">📥 Themme Downloader - SSR Rendering Model</h1>
 
 <p align="center">
-    Download your favorite HTML templates from anywhere with a simple CLI command.
+    Download your favorite HTML themes from anywhere with a simple CLI command.
     Automatically fetch HTML pages, assets, styles, scripts, images, and organize them into a ready-to-use local project.
 </p>
 
@@ -14,7 +14,7 @@
 
 ## ✨ Features
 
-* 🌐 Download any public HTML template from a URL
+* 🌐 Download any public HTML theme from a URL
 * 🎨 Automatically detect and download CSS, JavaScript, fonts, and images
 * 📁 Organize assets into a clean project structure
 * ⚡ Simple CLI interface
@@ -29,7 +29,7 @@
 ### Install with Composer
 
 ```bash
-composer create-project arefshojaei/template-downloader:dev-main my-project
+composer create-project arefshojaei/theme-downloader:dev-main my-project
 ```
 
 Move into the project directory:
@@ -60,26 +60,26 @@ composer install
 
 ### Download a single template
 
-Use a template URL:
+Use a theme URL:
 
 ```bash
-php cli template https://example.com
+php cli theme https://example.com
 ```
 
 ---
 
-### Download multiple templates
+### Download multiple themes
 
-Define your templates inside:
+Define your themes inside:
 
 ```txt
-template.config.json
+theme.config.json
 ```
 
 Then run:
 
 ```bash
-php cli template --config
+php cli theme --config
 ```
 
 ---
@@ -89,24 +89,24 @@ php cli template --config
 After downloading a template, your output will look like this:
 
 ```txt
-template/
+theme/
 │
 ├── assets/
-│   ├── images/
+│   └── css/
+│   ├── js/
 │   ├── fonts/
-│   ├── scripts/
-│   └── styles/
+│   ├── images/
 │
 └── index.html
 ```
 
-The template is now available for local development and customization.
+The theme is now available for local development and customization.
 
 ---
 
-## 🖥 Preview the Downloaded Template
+## 🖥 Preview the Downloaded Theme
 
-For the best experience, run the template using a local web server because some assets may require HTTP access.
+For the best experience, run the theme using a local web server because some assets may require HTTP access.
 
 ### Method 1: Live Server (VS Code Extension)
 
@@ -119,7 +119,7 @@ Install the **Live Server** extension and open the template directory.
 Move to the downloaded template:
 
 ```bash
-cd dist/template-name
+cd dist/theme-name
 ```
 
 Start the server:
@@ -138,16 +138,16 @@ http://localhost:5200
 
 ## 🔧 Example Workflow
 
-1. Download a template:
+1. Download a theme:
 
 ```bash
-php cli template https://my-template.com
+php cli theme https://my-theme.com
 ```
 
 2. Enter the generated directory:
 
 ```bash
-cd dist/my-template
+cd dist/my-theme
 ```
 
 3. Run a local server:
@@ -156,7 +156,7 @@ cd dist/my-template
 php -S localhost:5200
 ```
 
-4. Customize the template files and start development.
+4. Customize the theme files and start development.
 
 ---
 
@@ -178,7 +178,7 @@ Website URL
  File Organizer
      |
      |
- Local Template Project
+ Local Theme Project
 ```
 
 ---
@@ -187,10 +187,10 @@ Website URL
 
 This project is useful for:
 
-* Saving HTML templates for offline usage
+* Saving HTML themes for offline usage
 * Creating local copies of website themes
 * Learning frontend architecture
-* Customizing existing templates
+* Customizing existing themes
 * Building prototypes faster
 
 ---
