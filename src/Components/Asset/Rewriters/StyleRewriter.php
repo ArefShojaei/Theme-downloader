@@ -9,7 +9,17 @@ final class StyleRewriter extends BaseAssetRewriter
     public function rewrite(): void
     {
         $this->page->findAll("link[href]")->each(function ($_, $element) {
-            $element->attr("href", "#");
+            $attributes = $element->attr();
+
+            $rel = $attributes["rel"];
+            $link = $attributes["href"];
+
+            if ($rel === "stylesheet" && !str_contains($link, "#")) {
+                $root = "/assets/css/";
+                $path = $root . pathinfo($link, PATHINFO_BASENAME);
+
+                $element->attr("href", $path);
+            }
         });
     }
 }
