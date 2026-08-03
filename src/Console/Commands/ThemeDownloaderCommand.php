@@ -2,63 +2,29 @@
 
 namespace App\Console\Commands;
 
-use Spider\Spider;
-use Kit\Net\Request;
-use Kit\Support\{Str, Arr};
+use Kit\Support\Arr;
 use PhpX\Utils\Console\Console;
 use PhpX\Components\Console\Command;
 
-use App\Components\Theme\ThemeFactory;
+use App\Components\Theme\ThemeProcessor;
 
 final class ThemeDownloaderCommand extends Command
 {
     public function exec(array $params): string
     {
+        $name = Arr::get($params, "name");
         $url = Arr::get($params, "url");
 
-        if (!Str::isURL($url)) {
-            return Console::error(label: "VALIDATION", message: "Invalid URL!");
-        }
+        $processor = new ThemeProcessor([
+            $name => [
+                "pages" => [
+                    "index" => $url,
+                ],
+                "fonts" => [],
+            ],
+        ]);
 
-        echo Console::info(
-            label: "START",
-            message: "\"{$url}\" discovery theme...",
-        ) . PHP_EOL;
-
-        $html = (string) Request::get($url);
-
-        if (Str::isEmpty($html) || Str::isJSON($html)) {
-            Console::error(
-                label: "VALIDATION",
-                message: "Response content is not valid HTML output!",
-            );
-        }
-
-        /**
-         * Load DOM Tree
-         */
-        $spider = new Spider();
-
-        $page = $spider->loadHTML($html);
-
-        /**
-         * Create Theme
-         *
-         * 1- Configure
-         * 2- Download
-         * 3- Save
-         */
-        $factory = new ThemeFactory($page);
-
-        $theme = $factory->create(
-            name: pathinfo($url, PATHINFO_FILENAME),
-            path: dirname(__DIR__, 3) . "/tmp",
-            file: "index.html",
-        );
-
-        $theme->download();
-
-        $theme->save();
+        $processor->process();
 
         return Console::success(
             label: "END",
