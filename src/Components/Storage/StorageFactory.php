@@ -8,9 +8,9 @@ final class StorageFactory implements IStorageFactory
 {
     public static function create(string $path, string $name): Storage
     {
-        $root = $path . "/" . $name;
+        $root = $path . "/" . $name . "/";
 
-        $assets = $root . "/assets";
+        $assets = $root . "assets";
 
         $directories = [
             $assets . "/css",
