@@ -8,7 +8,7 @@ use Kit\Support\{Str, Arr};
 use PhpX\Utils\Console\Console;
 use PhpX\Components\Console\Command;
 
-use App\Components\Theme\ThemeBuilder;
+use App\Components\Theme\ThemeFactory;
 
 final class ThemeDownloaderCommand extends Command
 {
@@ -16,17 +16,23 @@ final class ThemeDownloaderCommand extends Command
     {
         $url = Arr::get($params, "url");
 
-        if (!Str::isURL($url)) return Console::error(label: "VALIDATION", message: "Invalid URL!");
+        if (!Str::isURL($url)) {
+            return Console::error(label: "VALIDATION", message: "Invalid URL!");
+        }
 
         echo Console::info(
             label: "START",
-            message: "\"{$url}\" discovery template...",
+            message: "\"{$url}\" discovery theme...",
         ) . PHP_EOL;
 
         $html = (string) Request::get($url);
 
-        if (Str::isEmpty($html) || Str::isJSON($html))
-            Console::error(label: "VALIDATION", message: "Response content is not valid HTML output!");
+        if (Str::isEmpty($html) || Str::isJSON($html)) {
+            Console::error(
+                label: "VALIDATION",
+                message: "Response content is not valid HTML output!",
+            );
+        }
 
         /**
          * Load DOM Tree
@@ -37,24 +43,22 @@ final class ThemeDownloaderCommand extends Command
 
         /**
          * Create Theme
-         * 1- Setup Builder
-         * 2- Configure
-         * 3- Collect Styles, Scripts, Images & Links addresses
-         * 4- Rewrite Styles, Scripts, Images & Links addresses
-         * 5- Download
+         *
+         * 1- Configure
+         * 2- Download
+         * 3- Save
          */
-        $theme = (new ThemeBuilder)
-            ->setName(pathinfo($url, PATHINFO_FILENAME))
-            ->setPage($page)
-            ->build();
+        $factory = new ThemeFactory($page);
 
-        $theme->configure(dirname(__DIR__, 3) . "/tmp");
-
-        $theme->collect();
-
-        $theme->rewrite();
+        $theme = $factory->create(
+            name: pathinfo($url, PATHINFO_FILENAME),
+            path: dirname(__DIR__, 3) . "/tmp",
+            file: "index.html",
+        );
 
         $theme->download();
+
+        $theme->save();
 
         return Console::success(
             label: "END",
