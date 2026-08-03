@@ -8,9 +8,9 @@ use Kit\Net\Request;
 use Kit\Support\{Str, Arr};
 use PhpX\Utils\Console\Console;
 
-use App\Common\Interfaces\Processor;
+use App\Components\Theme\Interfaces\Processor as InterfacesProcessor;
 
-final class ThemeProcessor implements Processor
+final class ThemeProcessor implements InterfacesProcessor
 {
     public function __construct(private array $themes) {}
 
