@@ -1,6 +1,6 @@
 <div align="center">
 
-<h1 align="center">📥 Themme Downloader - SSR Rendering Model</h1>
+<h1 align="center">📥 Theme Downloader - SSR Rendering Model</h1>
 
 <p align="center">
     Download your favorite HTML themes from anywhere with a simple CLI command.
@@ -42,9 +42,9 @@ cd my-project
 ## Clone from GitHub
 
 ```bash
-git clone https://github.com/ArefShojaei/Template-downloader.git
+git clone https://github.com/ArefShojaei/Theme-downloader.git
 
-cd Template-downloader
+cd Theme-downloader
 ```
 
 Install dependencies:
@@ -57,7 +57,7 @@ composer install
 
 ## 🚀 Quick Start
 
-### Download a single template
+### Download a single theme
 
 Use a theme URL:
 
@@ -85,7 +85,7 @@ php cli theme --config
 
 ## 📂 Downloaded Project Structure
 
-After downloading a template, your output will look like this:
+After downloading a theme, your output will look like this:
 
 ```txt
 theme/
@@ -109,13 +109,13 @@ For the best experience, run the theme using a local web server because some ass
 
 ### Method 1: Live Server (VS Code Extension)
 
-Install the **Live Server** extension and open the template directory.
+Install the **Live Server** extension and open the theme directory.
 
 ---
 
 ### Method 2: PHP Built-in Web Server
 
-Move to the downloaded template:
+Move to the downloaded theme:
 
 ```bash
 cd dist/theme-name
@@ -194,9 +194,9 @@ This project is useful for:
 
 ---
 
-## 🔥 Why Template Downloader?
+## 🔥 Why Theme Downloader?
 
-Instead of manually downloading every image, stylesheet, font, and JavaScript file, Template Downloader automates the entire process with a single command.
+Instead of manually downloading every image, stylesheet, font, and JavaScript file, Theme Downloader automates the entire process with a single command.
 
 It saves time and provides a clean starting point for your frontend projects.
 
