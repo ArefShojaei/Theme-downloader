@@ -8,6 +8,10 @@ $app->command(
     "theme --config",
     new App\Console\Commands\ThemeDownloaderFromConfigCommand(),
 );
-$app->command("theme {url}", new App\Console\Commands\ThemeDownloaderCommand());
+
+$app->command(
+    "theme {name} {url}",
+    new App\Console\Commands\ThemeDownloaderCommand(),
+);
 
 $app->launch();
