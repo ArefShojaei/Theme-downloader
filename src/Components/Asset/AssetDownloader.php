@@ -52,6 +52,8 @@ final class AssetDownloader implements Downloadable
                 message: "Downloading \"{$asset}\"...",
             ) . PHP_EOL;
 
+            if (str_contains($asset, " ")) continue;
+
             $content = (string) Request::get($asset);
 
             $filePath = Path::create(
