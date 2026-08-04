@@ -6,6 +6,7 @@ use Kit\Support\Arr;
 use PhpX\Utils\Console\Console;
 use PhpX\Components\Console\Command;
 
+use App\Components\Path\Domain;
 use App\Components\Theme\ThemeProcessor;
 
 final class ThemeDownloaderCommand extends Command
@@ -14,6 +15,8 @@ final class ThemeDownloaderCommand extends Command
     {
         $name = Arr::get($params, "name");
         $url = Arr::get($params, "url");
+
+        Domain::set($url);
 
         $processor = new ThemeProcessor([
             $name => [
