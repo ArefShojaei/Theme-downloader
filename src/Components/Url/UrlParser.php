@@ -39,24 +39,20 @@ final class UrlParser implements IUrlParser
         return $this->options["host"];
     }
 
-    public function path(): string
+    public function path(): ?string
     {
-        return $this->options["path"];
+        return $this->options["path"] ?? null;
     }
 
     private function getRoot(): string
     {
         $path = $this->path() ?? false;
 
-        if (!$path) {
-            return "";
-        }
+        if (!$path) return "";
 
         preg_match(self::ROOT_REGEX_PATTERN, $path, $matches);
 
-        if (!count($matches)) {
-            return "";
-        }
+        if (!count($matches)) return "";
 
         return $matches["root"];
     }

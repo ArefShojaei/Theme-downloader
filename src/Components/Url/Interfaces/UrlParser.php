@@ -12,5 +12,5 @@ interface UrlParser
 
     public function host(): string;
 
-    public function path(): string;
+    public function path(): ?string;
 }
