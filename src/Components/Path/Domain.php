@@ -16,7 +16,7 @@ final class Domain implements IDomain
             throw new Exception("Domain has already been set!");
         }
 
-        self::$address = $address;
+        self::$address = UrlParser::parse($address)->get();
     }
 
     public static function get(): string
