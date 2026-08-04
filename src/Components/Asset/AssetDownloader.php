@@ -47,7 +47,7 @@ final class AssetDownloader implements Downloadable
         if (empty($assets)) return;
 
         foreach ($assets as $asset) {
-            echo Console::warn(
+            echo Console::info(
                 label: $label,
                 message: "Downloading \"{$asset}\"...",
             ) . PHP_EOL;

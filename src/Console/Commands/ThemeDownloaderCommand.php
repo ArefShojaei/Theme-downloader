@@ -26,9 +26,6 @@ final class ThemeDownloaderCommand extends Command
 
         $processor->process();
 
-        return Console::success(
-            label: "END",
-            message: "the template discovery done successfully.",
-        );
+        return "Done.";
     }
 }

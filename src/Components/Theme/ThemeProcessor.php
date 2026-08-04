@@ -44,8 +44,8 @@ final class ThemeProcessor implements InterfacesProcessor
 
             echo Console::info(
                 label: "START",
-                message: "\"{$url}\" discovery theme...",
-            ) . PHP_EOL;
+                message: "\"{$url}\" theme page discovery...",
+            ) . PHP_EOL . PHP_EOL;
 
             $html = (string) Request::get($url);
 
@@ -55,6 +55,7 @@ final class ThemeProcessor implements InterfacesProcessor
                     message: "Response content is not valid HTML output!",
                 );
             }
+
 
             /**
              * Load DOM Tree
@@ -72,15 +73,29 @@ final class ThemeProcessor implements InterfacesProcessor
              */
             $factory = new ThemeFactory($page);
 
+            $themeName = $name;
+            $themePath = Path::get("dist");
+            $themeFile = "{$filename}.html";
+
             $theme = $factory->create(
-                name: $name,
-                path: Path::get("dist"),
-                file: "{$filename}.html",
+                name: $themeName,
+                path: $themePath,
+                file: $themeFile,
             );
 
             $theme->download();
 
             $theme->save();
+
+            echo PHP_EOL . Console::success(
+                label: "END",
+                message: "\"{$url}\" theme page discovery",
+            ) . PHP_EOL;
+
+            echo Console::warn(
+                label: "PATH",
+                message: "See in \"{$themePath}/{$themeName}\"",
+            ) . PHP_EOL;
         }
     }
 
@@ -89,6 +104,11 @@ final class ThemeProcessor implements InterfacesProcessor
         if (empty($fonts)) return;
 
         foreach ($fonts as $font) {
+            echo Console::info(
+                label: "FONT",
+                message: "Downloading \"{$font}\"...",
+            ) . PHP_EOL;
+
             $content = Request::get($font);
 
             $path =
@@ -97,6 +117,11 @@ final class ThemeProcessor implements InterfacesProcessor
                 Path::file($font);
 
             File::save($path, $content);
+
+            echo Console::success(
+                label: "FONT",
+                message: "Downloaded \"{$font}\".",
+            ) . PHP_EOL;
         }
     }
 }
