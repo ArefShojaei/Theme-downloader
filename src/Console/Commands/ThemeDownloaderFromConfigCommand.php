@@ -7,13 +7,14 @@ use Kit\Json\Json;
 use PhpX\Utils\Console\Console;
 use PhpX\Components\Console\Command;
 
+use App\Components\Url\Path;
 use App\Components\Theme\ThemeProcessor;
 
 final class ThemeDownloaderFromConfigCommand extends Command
 {
     public function exec(array $params): string
     {
-        $configPath = dirname(__DIR__, 3) . "/theme.config.json";
+        $configPath = Path::create(Path::root() . "/theme.config.json");
 
         if (!File::has($configPath)) {
             return Console::error(
