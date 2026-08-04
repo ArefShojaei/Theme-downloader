@@ -5,6 +5,7 @@ namespace App\Components\Theme;
 use Spider\Page;
 
 use App\Components\Path\Path;
+use App\Components\Asset\Resolvers\UrlResolver;
 use App\Components\Storage\{Storage, StorageFactory};
 use App\Components\Theme\Interfaces\Theme as ITheme;
 use App\Components\Asset\{
@@ -52,13 +53,15 @@ final class Theme implements ITheme
 
     private function collect(): void
     {
-        $collectorFactory = new AssetCollectorFactory($this->page);
+        $resolver = new UrlResolver();
+
+        $collectorFactory = new AssetCollectorFactory($this->page, $resolver);
 
         $this->aggregator = new AssetAggregator(
             style: $collectorFactory->createStyleCollector(),
+            link: $collectorFactory->createLinkCollector(),
             script: $collectorFactory->createScriptCollector(),
             image: $collectorFactory->createImageCollector(),
-            link: $collectorFactory->createLinkCollector(),
         );
     }
 
