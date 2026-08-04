@@ -2,23 +2,21 @@
 
 namespace App\Components\Asset\Collectors;
 
-use Kit\Support\Arr;
+use Spider\Page;
 
 use App\Components\Asset\BaseAssetCollector;
+use App\Components\Asset\Interfaces\AssetCollectorStrategy;
 
 final class ScriptCollector extends BaseAssetCollector
 {
+    public function __construct(
+        private Page $page,
+        private AssetCollectorStrategy $strategy,
+    ) {}
+
     public function collect(): self
     {
-        $this->page->findAll("script[src]")->each(function ($_, $element) {
-            $attributes = $element->attr();
-
-            $src = Arr::get($attributes, "src");
-
-            if (!empty($src) && !str_contains($src, "#")) {
-                $this->links[] = $src;
-            }
-        });
+        $this->links = $this->strategy->collect($this->page);
 
         return $this;
     }

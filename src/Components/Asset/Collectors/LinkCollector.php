@@ -2,23 +2,21 @@
 
 namespace App\Components\Asset\Collectors;
 
-use Kit\Support\Arr;
+use Spider\Page;
 
 use App\Components\Asset\BaseAssetCollector;
+use App\Components\Asset\Interfaces\AssetCollectorStrategy;
 
 final class LinkCollector extends BaseAssetCollector
 {
+    public function __construct(
+        private Page $page,
+        private AssetCollectorStrategy $strategy,
+    ) {}
+
     public function collect(): self
     {
-        $this->page->findAll("a[href]")->each(function ($_, $element) {
-            $attributes = $element->attr();
-
-            $link = Arr::get($attributes, "href");
-
-            if (!empty($link) && !str_contains($link, "#")) {
-                $this->links[] = $link;
-            }
-        });
+        $this->links = $this->strategy->collect($this->page);
 
         return $this;
     }

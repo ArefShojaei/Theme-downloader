@@ -2,24 +2,21 @@
 
 namespace App\Components\Asset\Collectors;
 
-use Kit\Support\Arr;
+use Spider\Page;
 
 use App\Components\Asset\BaseAssetCollector;
+use App\Components\Asset\Interfaces\AssetCollectorStrategy;
 
 final class StyleCollector extends BaseAssetCollector
 {
+    public function __construct(
+        private Page $page,
+        private AssetCollectorStrategy $strategy,
+    ) {}
+
     public function collect(): self
     {
-        $this->page->findAll("link[href]")->each(function ($_, $element) {
-            $attributes = $element->attr();
-
-            $rel = Arr::get($attributes, "rel");
-            $link = Arr::get($attributes, "href");
-
-            if ($rel === "stylesheet" && !str_contains($link, "#")) {
-                $this->links[] = $link;
-            }
-        });
+        $this->links = $this->strategy->collect($this->page);
 
         return $this;
     }

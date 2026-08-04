@@ -2,14 +2,20 @@
 
 namespace App\Components\Asset\Rewriters;
 
+use Spider\Page;
+
 use App\Components\Asset\BaseAssetRewriter;
+use App\Components\Asset\Interfaces\AssetRewriterStrategy;
 
 final class LinkRewriter extends BaseAssetRewriter
 {
+    public function __construct(
+        private Page $page,
+        private AssetRewriterStrategy $strategy,
+    ) {}
+
     public function rewrite(): void
     {
-        $this->page->findAll("a[href]")->each(function ($_, $element) {
-            $element->attr("href", "#");
-        });
+        $this->strategy->rewrite($this->page);
     }
 }
