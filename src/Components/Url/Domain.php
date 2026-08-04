@@ -12,10 +12,6 @@ final class Domain implements IDomain
 
     public static function set(string $address): void
     {
-        if (self::$address) {
-            throw new Exception("Domain has already been set!");
-        }
-
         self::$address = UrlParser::parse($address)->get();
     }
 
