@@ -8,7 +8,7 @@ use Kit\Net\Request;
 use Kit\Support\{Str, Arr};
 use PhpX\Utils\Console\Console;
 
-use App\Components\Path\Path;
+use App\Components\Url\{Path, Domain};
 use App\Components\Theme\Interfaces\Processor as InterfacesProcessor;
 
 final class ThemeProcessor implements InterfacesProcessor
@@ -39,6 +39,8 @@ final class ThemeProcessor implements InterfacesProcessor
 
                 return;
             }
+
+            Domain::set($url);
 
             echo Console::info(
                 label: "START",

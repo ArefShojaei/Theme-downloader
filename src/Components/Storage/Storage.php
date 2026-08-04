@@ -4,7 +4,7 @@ namespace App\Components\Storage;
 
 use Kit\Fs\{Directory, File};
 
-use App\Components\Path\Path;
+use App\Components\Url\Path;
 use App\Components\Storage\Interfaces\Storage as IStorage;
 
 final class Storage implements IStorage

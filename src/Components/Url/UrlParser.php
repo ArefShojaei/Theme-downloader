@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Components\Path;
+namespace App\Components\Url;
 
 use Kit\Support\Str;
 
-use App\Components\Path\Exceptions\InvalidUrlException;
-use App\Components\Path\Interfaces\UrlParser as IUrlParser;
+use App\Components\Url\Exceptions\InvalidUrlException;
+use App\Components\Url\Interfaces\UrlParser as IUrlParser;
 
 final class UrlParser implements IUrlParser
 {
@@ -15,7 +15,9 @@ final class UrlParser implements IUrlParser
 
     public static function parse(string $url): self
     {
-        if (!Str::isURL($url)) throw new InvalidUrlException();
+        if (!Str::isURL($url)) {
+            throw new InvalidUrlException();
+        }
 
         return new self(parse_url($url));
     }
@@ -46,11 +48,15 @@ final class UrlParser implements IUrlParser
     {
         $path = $this->path() ?? false;
 
-        if (!$path) return "";
+        if (!$path) {
+            return "";
+        }
 
         preg_match(self::ROOT_REGEX_PATTERN, $path, $matches);
 
-        if (!count($matches)) return "";
+        if (!count($matches)) {
+            return "";
+        }
 
         return $matches["root"];
     }

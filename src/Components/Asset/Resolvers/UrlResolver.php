@@ -2,7 +2,7 @@
 
 namespace App\Components\Asset\Resolvers;
 
-use App\Components\Path\Domain;
+use App\Components\Url\Domain;
 use App\Components\Asset\Interfaces\UrlResolver as IUrlResolver;
 
 class UrlResolver implements IUrlResolver

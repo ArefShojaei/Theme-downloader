@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Components\Path\Exceptions;
+namespace App\Components\Url\Exceptions;
 
 use Exception;
 

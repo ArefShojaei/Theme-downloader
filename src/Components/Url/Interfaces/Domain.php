@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Components\Path\Interfaces;
+namespace App\Components\Url\Interfaces;
 
 interface Domain
 {

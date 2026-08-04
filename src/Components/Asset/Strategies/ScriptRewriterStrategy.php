@@ -5,7 +5,7 @@ namespace App\Components\Asset\Strategies;
 use Spider\Page;
 use Kit\Support\Arr;
 
-use App\Components\Path\Path;
+use App\Components\Url\Path;
 use App\Components\Asset\Interfaces\AssetRewriterStrategy;
 
 final class ScriptRewriterStrategy implements AssetRewriterStrategy

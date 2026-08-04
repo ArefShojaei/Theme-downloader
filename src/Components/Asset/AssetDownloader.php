@@ -6,7 +6,7 @@ use Kit\Net\Request;
 use Kit\Support\Arr;
 use PhpX\Utils\Console\Console;
 
-use App\Components\Path\Path;
+use App\Components\Url\Path;
 use App\Components\Storage\Storage;
 use App\Components\Asset\Interfaces\Downloadable;
 

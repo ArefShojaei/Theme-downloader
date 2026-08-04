@@ -2,7 +2,7 @@
 
 namespace App\Components\Storage;
 
-use App\Components\Path\Path;
+use App\Components\Url\Path;
 use App\Components\Storage\Interfaces\StorageFactory as IStorageFactory;
 
 final class StorageFactory implements IStorageFactory

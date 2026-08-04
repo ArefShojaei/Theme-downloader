@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Components\Path;
+namespace App\Components\Url;
 
-use App\Components\Path\Interfaces\Path as IPath;
+use App\Components\Url\Interfaces\Path as IPath;
 
 final class Path implements IPath
 {

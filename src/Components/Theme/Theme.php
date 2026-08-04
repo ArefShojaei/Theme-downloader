@@ -4,7 +4,7 @@ namespace App\Components\Theme;
 
 use Spider\Page;
 
-use App\Components\Path\Path;
+use App\Components\Url\Path;
 use App\Components\Asset\Resolvers\UrlResolver;
 use App\Components\Storage\{Storage, StorageFactory};
 use App\Components\Theme\Interfaces\Theme as ITheme;

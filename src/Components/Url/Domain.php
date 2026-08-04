@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Components\Path;
+namespace App\Components\Url;
 
 use Exception;
 
-use App\Components\Path\Interfaces\Domain as IDomain;
+use App\Components\Url\Interfaces\Domain as IDomain;
 
 final class Domain implements IDomain
 {
