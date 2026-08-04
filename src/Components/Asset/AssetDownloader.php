@@ -34,82 +34,35 @@ final class AssetDownloader implements Downloadable
         $scripts = Arr::get($assets, "scripts");
         $images = Arr::get($assets, "images");
 
-        $this->downloadStyles($styles);
-        $this->downloadScripts($scripts);
-        $this->downloadImages($images);
+        $this->downloadAsset(label: "CSS", directory: "css", assets: $styles);
+        $this->downloadAsset(label: "JS", directory: "js", assets: $scripts);
+        $this->downloadAsset(label: "IMG", directory: "images", assets: $images);
     }
 
-    private function downloadStyles(array $styles): void
-    {
-        if (empty($styles)) return;
+    private function downloadAsset(
+        string $label,
+        string $directory,
+        array $assets,
+    ): void {
+        if (empty($assets)) return;
 
-        foreach ($styles as $style) {
+        foreach ($assets as $asset) {
             echo Console::warn(
-                label: "CSS",
-                message: "Downloading \"{$style}\"...",
+                label: $label,
+                message: "Downloading \"{$asset}\"...",
             ) . PHP_EOL;
 
-            $content = (string) Request::get($style);
+            $content = (string) Request::get($asset);
 
             $filePath = Path::create(
-                asset("css") . $this->getAssetFile($style),
+                asset($directory) . $this->getAssetFile($asset),
             );
 
             $this->storage->save($filePath, $content);
 
             echo Console::success(
-                label: "CSS",
-                message: "Downloaded \"{$style}\".",
-            ) . PHP_EOL;
-        }
-    }
-
-    private function downloadScripts(array $scripts): void
-    {
-        if (empty($scripts)) return;
-
-        foreach ($scripts as $script) {
-            echo Console::warn(
-                label: "JS",
-                message: "Downloading \"{$script}\"...",
-            ) . PHP_EOL;
-
-            $content = (string) Request::get($script);
-
-            $filePath = Path::create(
-                asset("js") . $this->getAssetFile($script),
-            );
-
-            $this->storage->save($filePath, $content);
-
-            echo Console::success(
-                label: "JS",
-                message: "Downloaded \"{$script}\".",
-            ) . PHP_EOL;
-        }
-    }
-
-    private function downloadImages(array $images): void
-    {
-        if (empty($images)) return;
-
-        foreach ($images as $image) {
-            echo Console::warn(
-                label: "IMG",
-                message: "Downloading \"{$image}\"...",
-            ) . PHP_EOL;
-
-            $content = (string) Request::get($image);
-
-            $filePath = Path::create(
-                asset("images") . $this->getAssetFile($image),
-            );
-
-            $this->storage->save($filePath, $content);
-
-            echo Console::success(
-                label: "IMG",
-                message: "Downloaded \"{$image}\".",
+                label: $label,
+                message: "Downloaded \"{$asset}\".",
             ) . PHP_EOL;
         }
     }
