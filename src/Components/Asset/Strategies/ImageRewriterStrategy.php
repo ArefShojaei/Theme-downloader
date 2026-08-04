@@ -18,7 +18,7 @@ final class ImageRewriterStrategy implements AssetRewriterStrategy
             $src = Arr::get($attributes, "src");
 
             if (!empty($src) || isset($src)) {
-                $path = Path::create("/assets/images/" . Path::file($src));
+                $path = Path::create(asset("images") . Path::file($src));
 
                 $element->attr("src", $path);
             }

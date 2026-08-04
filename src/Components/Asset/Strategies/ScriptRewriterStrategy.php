@@ -18,7 +18,7 @@ final class ScriptRewriterStrategy implements AssetRewriterStrategy
             $src = Arr::get($attributes, "src");
 
             if (!empty($src) && !str_contains($src, "#")) {
-                $path = Path::create("/assets/js/" . Path::file($src));
+                $path = Path::create(asset("js") . Path::file($src));
 
                 $element->attr("src", $path);
             }

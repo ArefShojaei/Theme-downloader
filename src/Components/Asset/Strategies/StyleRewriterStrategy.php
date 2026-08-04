@@ -19,7 +19,7 @@ final class StyleRewriterStrategy implements AssetRewriterStrategy
             $link = Arr::get($attributes, "href");
 
             if ($rel === "stylesheet" && !str_contains($link, "#")) {
-                $path = Path::create("/assets/css/" . Path::file($link));
+                $path = Path::create(asset("css") . Path::file($link));
 
                 $element->attr("href", $path);
             }

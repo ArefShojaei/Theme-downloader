@@ -52,7 +52,7 @@ final class AssetDownloader implements Downloadable
             $content = (string) Request::get($style);
 
             $filePath = Path::create(
-                "/assets/css/" . $this->getAssetFile($style),
+                asset("css") . $this->getAssetFile($style),
             );
 
             $this->storage->save($filePath, $content);
@@ -77,7 +77,7 @@ final class AssetDownloader implements Downloadable
             $content = (string) Request::get($script);
 
             $filePath = Path::create(
-                "/assets/js/" . $this->getAssetFile($script),
+                asset("js") . $this->getAssetFile($script),
             );
 
             $this->storage->save($filePath, $content);
@@ -102,7 +102,7 @@ final class AssetDownloader implements Downloadable
             $content = (string) Request::get($image);
 
             $filePath = Path::create(
-                "/assets/images/" . $this->getAssetFile($image),
+                asset("images") . $this->getAssetFile($image),
             );
 
             $this->storage->save($filePath, $content);
