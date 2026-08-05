@@ -1,23 +1,13 @@
 {
-    "avan": {
+    "pestphp.com": {
         "fonts": [
-            "https://avan.wbrk.ir/demo1/wp-content/uploads/2025/08/MorabbaVF.ttf",
-            "https://avan.wbrk.ir/demo1/wp-content/uploads/2025/10/DimaMaral2.ttf",
-            "https://avan.wbrk.ir/demo1/wp-content/uploads/2025/05/IRANSansXVF.ttf",
-            "https://avan.wbrk.ir/demo1/wp-content/uploads/2025/10/Gilroy-Light.ttf",
-            "https://avan.wbrk.ir/demo1/wp-content/themes/avan/assets/fonts/IRANSansXVF.ttf",
-            "https://avan.wbrk.ir/demo1/wp-content/uploads/2025/08/BonyadeKoodakFaNum-VF.ttf",
-            "https://avan.wbrk.ir/demo1/wp-content/themes/avan/assets/fonts/BonyadeKoodakFaNum-VF.ttf",
-            "https://avan.wbrk.ir/demo1/wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-solid-900.woff2"
+            "https://pestphp.com/www/fonts/archivo-var.woff2",
+            "https://pestphp.com/www/fonts/instrument-sans-var.woff2",
+            "https://pestphp.com/www/fonts/jetbrains-mono-var.woff2",
+            "https://pestphp.com/www/fonts/archivo-italic-var.woff2"
         ],
         "pages": {
-            "index": "https://avan.wbrk.ir/demo1/",
-            "about-us": "https://avan.wbrk.ir/demo1/about-us/",
-            "contact-us": "https://avan.wbrk.ir/demo1/contact-us/",
-            "shop": "https://avan.wbrk.ir/demo1/shop/",
-            "blog": "https://avan.wbrk.ir/demo1/blog/",
-            "auth": "https://avan.wbrk.ir/demo1/auth/",
-            "cart": "https://avan.wbrk.ir/demo1/cart/"
+            "index": "https://pestphp.com/"
         }
     }
 }
