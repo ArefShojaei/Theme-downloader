@@ -7,6 +7,7 @@ use Spider\Spider;
 use Kit\Net\Request;
 use Kit\Support\{Str, Arr};
 use PhpX\Utils\Console\Console;
+use Kit\Net\Exceptions\RequestException;
 
 use App\Components\Url\{Path, Domain};
 use App\Components\Theme\Interfaces\Processor as InterfacesProcessor;
@@ -47,7 +48,16 @@ final class ThemeProcessor implements InterfacesProcessor
                 message: "\"{$url}\" theme page discovery...",
             ) . PHP_EOL . PHP_EOL;
 
-            $html = (string) Request::get($url);
+            try {
+                $html = Request::get($url);
+            } catch (RequestException $e) {
+                echo Console::error(
+                    label: "HTTP",
+                    message: "Failed to get \"{$url}\"",
+                ) . PHP_EOL;
+
+                continue;
+            }
 
             if (Str::isEmpty($html) || Str::isJSON($html)) {
                 Console::error(
@@ -109,7 +119,16 @@ final class ThemeProcessor implements InterfacesProcessor
                 message: "Downloading \"{$font}\"...",
             ) . PHP_EOL;
 
-            $content = Request::get($font);
+            try {
+                $content = Request::get($font);
+            } catch (RequestException $e) {
+                echo Console::error(
+                    label: "HTTP",
+                    message: "Failed to download \"{$font}\"",
+                ) . PHP_EOL;
+
+                continue;
+            }
 
             $path =
                 Path::get("dist") .

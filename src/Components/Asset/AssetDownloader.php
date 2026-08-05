@@ -5,6 +5,7 @@ namespace App\Components\Asset;
 use Kit\Net\Request;
 use Kit\Support\Arr;
 use PhpX\Utils\Console\Console;
+use Kit\Net\Exceptions\RequestException;
 
 use App\Components\Url\Path;
 use App\Components\Storage\Storage;
@@ -52,9 +53,16 @@ final class AssetDownloader implements Downloadable
                 message: "Downloading \"{$asset}\"...",
             ) . PHP_EOL;
 
-            if (str_contains($asset, " ")) continue;
+            try {
+                $content = Request::get($asset);
+            } catch (RequestException $e) {
+                echo Console::error(
+                    label: "HTTP",
+                    message: "Failed to download \"{$asset}\"",
+                ) . PHP_EOL;
 
-            $content = (string) Request::get($asset);
+                continue;
+            }
 
             $filePath = Path::create(
                 asset($directory) . $this->getAssetFile($asset),
