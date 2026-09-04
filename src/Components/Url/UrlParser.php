@@ -9,9 +9,9 @@ use App\Components\Url\Interfaces\UrlParser as IUrlParser;
 
 final class UrlParser implements IUrlParser
 {
-    private const ROOT_REGEX_PATTERN = "/(?<root>.+)\/.+\.html/";
+    private const ROOT_PATTERN = "/(?<root>.+)\/.+\.html/";
 
-    public function __construct(private array $options) {}
+    private function __construct(private array $options) {}
 
     public static function parse(string $url): self
     {
@@ -50,7 +50,7 @@ final class UrlParser implements IUrlParser
 
         if (!$path) return "";
 
-        preg_match(self::ROOT_REGEX_PATTERN, $path, $matches);
+        preg_match(self::ROOT_PATTERN, $path, $matches);
 
         if (!count($matches)) return "";
 
