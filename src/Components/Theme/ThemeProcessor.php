@@ -2,28 +2,23 @@
 
 namespace App\Components\Theme;
 
-use Kit\Fs\File;
 use Spider\Spider;
 use Kit\Net\Request;
-use Kit\Support\{Str, Arr};
+use Kit\Support\Str;
 use PhpX\Utils\Console\Console;
 use Kit\Net\Exceptions\RequestException;
 
 use App\Components\Url\{Path, Domain};
-use App\Components\Theme\Interfaces\Processor as InterfacesProcessor;
+use App\Components\Theme\Interfaces\Processor as IProcessor;
 
-final class ThemeProcessor implements InterfacesProcessor
+final class ThemeProcessor implements IProcessor
 {
     public function __construct(private array $themes) {}
 
     public function process(): void
     {
-        foreach ($this->themes as $name => $options) {
-            $pages = Arr::get($options, "pages");
-            $fonts = Arr::get($options, "fonts");
-
+        foreach ($this->themes as $name => $pages) {
             $this->processPages($pages, $name);
-            $this->processFonts($fonts, $name);
         }
     }
 
@@ -36,7 +31,7 @@ final class ThemeProcessor implements InterfacesProcessor
                 echo Console::error(
                     label: "VALIDATION",
                     message: "Invalid URL!",
-                );
+                ) . PHP_EOL;
 
                 return;
             }
@@ -60,10 +55,10 @@ final class ThemeProcessor implements InterfacesProcessor
             }
 
             if (Str::isEmpty($html) || Str::isJSON($html)) {
-                Console::error(
+                echo Console::error(
                     label: "VALIDATION",
                     message: "Response content is not valid HTML output!",
-                );
+                ) . PHP_EOL;
             }
 
 
@@ -105,41 +100,6 @@ final class ThemeProcessor implements InterfacesProcessor
             echo Console::warn(
                 label: "PATH",
                 message: "See in \"{$themePath}/{$themeName}\"",
-            ) . PHP_EOL;
-        }
-    }
-
-    private function processFonts(array $fonts, string $name): void
-    {
-        if (empty($fonts)) return;
-
-        foreach ($fonts as $font) {
-            echo Console::info(
-                label: "FONT",
-                message: "Downloading \"{$font}\"...",
-            ) . PHP_EOL;
-
-            try {
-                $content = Request::get($font);
-            } catch (RequestException $e) {
-                echo Console::error(
-                    label: "HTTP",
-                    message: "Failed to download \"{$font}\"",
-                ) . PHP_EOL;
-
-                continue;
-            }
-
-            $path =
-                Path::get("dist") .
-                Path::create("/{$name}/assets/fonts/") .
-                Path::file($font);
-
-            File::save($path, $content);
-
-            echo Console::success(
-                label: "FONT",
-                message: "Downloaded \"{$font}\".",
             ) . PHP_EOL;
         }
     }

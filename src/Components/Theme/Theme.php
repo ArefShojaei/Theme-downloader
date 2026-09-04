@@ -28,6 +28,8 @@ final class Theme implements ITheme
         private string $path,
         private string $file,
     ) {
+        ThemeMeta::set($name, $path);
+
         $this->storage = StorageFactory::create($path, $this->name);
     }
 
@@ -62,6 +64,7 @@ final class Theme implements ITheme
             link: $collectorFactory->createLinkCollector(),
             script: $collectorFactory->createScriptCollector(),
             image: $collectorFactory->createImageCollector(),
+            font: $collectorFactory->createFontCollector(),
         );
     }
 
@@ -74,6 +77,7 @@ final class Theme implements ITheme
             style: $rewriterFactory->createStyleRewriter(),
             script: $rewriterFactory->createScriptRewriter(),
             image: $rewriterFactory->createImageRewriter(),
+            font: $rewriterFactory->createFontRewriter(),
         );
 
         $coordinator->rewrite();
