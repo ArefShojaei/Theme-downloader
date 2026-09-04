@@ -4,6 +4,7 @@ namespace App\Components\Asset;
 
 use App\Components\Asset\Interfaces\Rewriteable;
 use App\Components\Asset\Rewriters\{
+    FontRewriter,
     ImageRewriter,
     LinkRewriter,
     ScriptRewriter,
@@ -17,6 +18,7 @@ final class AssetRewriteCoordinator implements Rewriteable
         private ImageRewriter $image,
         private StyleRewriter $style,
         private ScriptRewriter $script,
+        private FontRewriter $font,
     ) {}
 
     public function rewrite(): void
@@ -28,5 +30,7 @@ final class AssetRewriteCoordinator implements Rewriteable
         $this->style->rewrite();
 
         $this->script->rewrite();
+
+        $this->font->rewrite();
     }
 }

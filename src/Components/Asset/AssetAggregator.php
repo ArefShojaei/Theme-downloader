@@ -4,6 +4,7 @@ namespace App\Components\Asset;
 
 use App\Components\Asset\Interfaces\Aggregatable;
 use App\Components\Asset\Collectors\{
+    FontCollector,
     StyleCollector,
     ScriptCollector,
     ImageCollector,
@@ -17,6 +18,7 @@ final class AssetAggregator implements Aggregatable
         private ScriptCollector $script,
         private ImageCollector $image,
         private LinkCollector $link,
+        private FontCollector $font,
     ) {}
 
     public function aggregate(): array
@@ -26,6 +28,7 @@ final class AssetAggregator implements Aggregatable
             "scripts" => $this->script->collect()->toArray(),
             "links" => $this->link->collect()->toArray(),
             "images" => $this->image->collect()->toArray(),
+            "fonts" => $this->font->collect()->toArray(),
         ];
     }
 }

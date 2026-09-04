@@ -34,10 +34,12 @@ final class AssetDownloader implements Downloadable
         $styles = Arr::get($assets, "styles");
         $scripts = Arr::get($assets, "scripts");
         $images = Arr::get($assets, "images");
+        $fonts = Arr::get($assets, "fonts");
 
         $this->downloadAsset(label: "CSS", directory: "css", assets: $styles);
         $this->downloadAsset(label: "JS", directory: "js", assets: $scripts);
         $this->downloadAsset(label: "IMG", directory: "images", assets: $images);
+        $this->downloadAsset(label: "FONT", directory: "fonts", assets: $fonts);
     }
 
     private function downloadAsset(

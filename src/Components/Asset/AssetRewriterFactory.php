@@ -4,15 +4,19 @@ namespace App\Components\Asset;
 
 use Spider\Page;
 
-use App\Components\Asset\Interfaces\AssetRewriter;
-use App\Components\Asset\Interfaces\AssetRewriterFactory as IAssetRewriterFactory;
+use App\Components\Asset\Interfaces\{
+    AssetRewriter,
+    AssetRewriterFactory as IAssetRewriterFactory,
+};
 use App\Components\Asset\Rewriters\{
+    FontRewriter,
     LinkRewriter,
     StyleRewriter,
     ScriptRewriter,
     ImageRewriter,
 };
 use App\Components\Asset\Strategies\{
+    FontRewriterStrategy,
     LinkRewriterStrategy,
     StyleRewriterStrategy,
     ScriptRewriterStrategy,
@@ -41,5 +45,10 @@ final class AssetRewriterFactory implements IAssetRewriterFactory
     public function createImageRewriter(): AssetRewriter
     {
         return new ImageRewriter($this->page, new ImageRewriterStrategy());
+    }
+
+    public function createFontRewriter(): AssetRewriter
+    {
+        return new FontRewriter($this->page, new FontRewriterStrategy());
     }
 }

@@ -8,12 +8,14 @@ use App\Components\Asset\Resolvers\UrlResolver;
 use App\Components\Asset\Interfaces\AssetCollector;
 use App\Components\Asset\Interfaces\AssetCollectorFactory as IAssetCollectorFactory;
 use App\Components\Asset\Collectors\{
+    FontCollector,
     ImageCollector,
     LinkCollector,
     ScriptCollector,
     StyleCollector,
 };
 use App\Components\Asset\Strategies\{
+    FontCollectorStrategy,
     ImageCollectorStrategy,
     LinkCollectorStrategy,
     ScriptCollectorStrategy,
@@ -56,6 +58,14 @@ final class AssetCollectorFactory implements IAssetCollectorFactory
         return new ImageCollector(
             $this->page,
             new ImageCollectorStrategy($this->resolver),
+        );
+    }
+
+    public function createFontCollector(): AssetCollector
+    {
+        return new FontCollector(
+            $this->page,
+            new FontCollectorStrategy($this->resolver),
         );
     }
 }

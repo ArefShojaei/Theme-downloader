@@ -8,8 +8,10 @@ use Kit\Support\Arr;
 use App\Components\Asset\Resolvers\UrlResolver;
 use App\Components\Asset\Interfaces\AssetCollectorStrategy;
 
-class StyleCollectorStrategy implements AssetCollectorStrategy
+final class FontCollectorStrategy implements AssetCollectorStrategy
 {
+    private const REGEX_PATTERN = "/@font-face\s*\{[\s\S]*?\bsrc\s*:\s*url\(\s*['\"]?(?<font>[^'\")]+)['\"]?\s*\)/";
+
     public function __construct(private UrlResolver $resolver) {}
 
     public function collect(Page $page): array
@@ -17,7 +19,7 @@ class StyleCollectorStrategy implements AssetCollectorStrategy
         $links = [];
 
         $page
-            ->findAll("link[href]")
+            ->findAll("link[rel='stylesheet']")
             ->each(function ($_, $element) use (&$links) {
                 $attributes = $element->attr();
 
@@ -27,7 +29,17 @@ class StyleCollectorStrategy implements AssetCollectorStrategy
 
                 if (empty($href) || str_contains($href, "#")) return;
 
-                $links[] = $this->resolver->resolve($href);
+                $src = $this->resolver->resolve($href);
+
+                $css = file_get_contents($src);
+
+                preg_match(self::REGEX_PATTERN, $css, $matches);
+
+                if (!empty($matches)) {
+                    $font = $matches["font"];
+
+                    $links[] = $this->resolver->resolve($font);
+                }
             });
 
         return $links;
