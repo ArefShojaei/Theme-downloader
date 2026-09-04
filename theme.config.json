@@ -1,13 +1,5 @@
 {
-    "pestphp.com": {
-        "fonts": [
-            "https://pestphp.com/www/fonts/archivo-var.woff2",
-            "https://pestphp.com/www/fonts/instrument-sans-var.woff2",
-            "https://pestphp.com/www/fonts/jetbrains-mono-var.woff2",
-            "https://pestphp.com/www/fonts/archivo-italic-var.woff2"
-        ],
-        "pages": {
-            "index": "https://pestphp.com/"
-        }
+    "pestphp": {
+        "index": "https://pestphp.com/"
     }
 }
