@@ -20,12 +20,14 @@ final class ThemeDownloaderFromConfigCommand extends Command
             return Console::error(
                 label: "VALIDATION",
                 message: "Theme config file doesn't exist!",
-            );
+            ) . PHP_EOL;
         }
 
         $content = File::get($configPath);
 
-        $themes = Json::decode($content, true);
+        $config = Json::decode($content, true);
+
+        $themes = $config;
 
         $processor = new ThemeProcessor($themes);
 

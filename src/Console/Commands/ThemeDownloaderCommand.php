@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use Kit\Support\Arr;
-use PhpX\Utils\Console\Console;
 use PhpX\Components\Console\Command;
 
 use App\Components\Theme\ThemeProcessor;
@@ -17,10 +16,7 @@ final class ThemeDownloaderCommand extends Command
 
         $processor = new ThemeProcessor([
             $name => [
-                "pages" => [
-                    "index" => $url,
-                ],
-                "fonts" => [],
+                "index" => $url,
             ],
         ]);
 
