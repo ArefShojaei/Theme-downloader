@@ -3,6 +3,7 @@
 namespace App\Components\Theme;
 
 use Spider\Page;
+use Kit\Fs\Archive;
 
 use App\Components\Url\Path;
 use App\Components\Asset\Resolvers\UrlResolver;
@@ -51,6 +52,17 @@ final class Theme implements ITheme
         );
 
         $this->page->export($path);
+    }
+
+    public function zip(string $comment): void
+    {
+        $meta = ThemeMeta::get();
+
+        $archive = new Archive("{$meta["path"]}/{$meta["name"]}.zip");
+        $archive->addDirectory("{$meta["path"]}/{$meta["name"]}");
+        $archive->addFromString("readme.md", $comment);
+        $archive->comment($comment);
+        $archive->close();
     }
 
     private function collect(): void
