@@ -35,6 +35,6 @@
         "php": "^8.0",
         "arefshojaei/php-x": "^1.6",
         "arefshojaei/spider": "^2.3",
-        "arefshojaei/kitdash": "^2.0"
+        "arefshojaei/kitdash": "^2.1"
     }
 }
