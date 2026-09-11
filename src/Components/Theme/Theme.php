@@ -54,11 +54,14 @@ final class Theme implements ITheme
         $this->page->export($path);
     }
 
-    public function zip(string $comment): void
+    public function zip(string $comment, ?string $password = null): void
     {
         $meta = ThemeMeta::get();
 
         $archive = new Archive("{$meta["path"]}/{$meta["name"]}.zip");
+
+        if ($password !== null) $archive->setPassword($password);
+
         $archive->addDirectory("{$meta["path"]}/{$meta["name"]}");
         $archive->addFromString("readme.md", $comment);
         $archive->comment($comment);
